@@ -4,12 +4,12 @@ import React from 'react';
 import './Login.css';
 const Login = () => {
   const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+       console.log('Received values of form: ', values);
   };
 
   return (
-    <Form
-      name="normal_login"
+      <Form
+          name="normal_login"
       className="login-form"
       initialValues={{
         remember: true,

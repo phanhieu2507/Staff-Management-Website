@@ -1,16 +1,11 @@
 import {
-  AutoComplete,
   Button,
-  Cascader,
-  Checkbox,
-  Col,
   Form,
   Input,
-  InputNumber,
-  Row,
   Select,
 } from 'antd';
 import React, { useState } from 'react';
+import axios from '../api/axios';
 const { Option } = Select;
 
 const formItemLayout = {
@@ -46,11 +41,16 @@ const tailFormItemLayout = {
 
 const Register = () => {
   const [form] = Form.useForm();
-
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
-  };
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
+ const[email,setEmail]=useState("");
+ const[password,setPassword]=useState("");
+ const[address,setAddress]=useState("");
+ const[phonenumber,setPhonenumber]=useState("");
+ const[username,setUsername]=useState("");
+  let item={email,password,address,phonenumber,username};
+ const handleSubmit = (e) =>{
+       e.preventDefaut();
+       axios.post(`\register`,item);
+ }
 
   return (
     <Form
@@ -74,7 +74,7 @@ const Register = () => {
           },
         ]}
       >
-        <Input  />
+        <Input onChange={(e)=>setEmail( e.target.value)}  />
       </Form.Item>
       <Form.Item
         name="password"
@@ -87,7 +87,7 @@ const Register = () => {
         ]}
         hasFeedback
       >
-        <Input.Password />
+        <Input.Password onChange={(e)=>setPassword( e.target.value)}/>
       </Form.Item>
       <Form.Item
         name="username"
@@ -100,7 +100,7 @@ const Register = () => {
           },
         ]}
       >
-        <Input />
+        <Input onChange={(e)=>setUsername( e.target.value)} />
       </Form.Item>
       <Form.Item
         name="address"
@@ -113,7 +113,7 @@ const Register = () => {
           },
         ]}
       >
-        <Input />
+        <Input onChange={(e)=>setAddress( e.target.value)}/>
       </Form.Item>
       <Form.Item
         name="phonenumber"
@@ -126,11 +126,11 @@ const Register = () => {
           },
         ]}
       >
-        <Input />
+        <Input onChange={(e)=>setPhonenumber( e.target.value)} />
       </Form.Item> 
       <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
-        <a href='\login'>Register</a>  
+        <Button type="primary" htmlType="submit" onChange={(e)=>handleSubmit(e)}>
+             Register  
         </Button>
       </Form.Item>
     </Form>
