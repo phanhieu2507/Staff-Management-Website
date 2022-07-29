@@ -2,11 +2,9 @@ import {
   Button,
   Form,
   Input,
-  Select,
 } from 'antd';
 import React, { useState } from 'react';
-import axios from '../api/axios';
-const { Option } = Select;
+import { registerAPI } from '../../api/authenticate';
 
 const formItemLayout = {
   labelCol: {
@@ -41,15 +39,18 @@ const tailFormItemLayout = {
 
 const Register = () => {
   const [form] = Form.useForm();
- const[email,setEmail]=useState("");
- const[password,setPassword]=useState("");
- const[address,setAddress]=useState("");
- const[phonenumber,setPhonenumber]=useState("");
- const[username,setUsername]=useState("");
-  let item={email,password,address,phonenumber,username};
- const handleSubmit = (e) =>{
-       e.preventDefaut();
-       axios.post(`\register`,item);
+ const[userInfor,setuserInfor]= useState({
+        username: "",
+        email: "",
+        password: "",
+        phonenumber: "",
+        address: "",
+ })
+  
+ const handleSubmit = async (e,userInfo) =>{
+       
+       e.preventDefault();
+        await registerAPI(userInfo);
  }
 
   return (
@@ -74,7 +75,7 @@ const Register = () => {
           },
         ]}
       >
-        <Input onChange={(e)=>setEmail( e.target.value)}  />
+        <Input onChange={(e)=>setuserInfor({...userInfor,email: e.target.value})}  />
       </Form.Item>
       <Form.Item
         name="password"
@@ -87,7 +88,7 @@ const Register = () => {
         ]}
         hasFeedback
       >
-        <Input.Password onChange={(e)=>setPassword( e.target.value)}/>
+        <Input.Password onChange={(e)=>setuserInfor({...userInfor,password: e.target.value})}/>
       </Form.Item>
       <Form.Item
         name="username"
@@ -100,7 +101,7 @@ const Register = () => {
           },
         ]}
       >
-        <Input onChange={(e)=>setUsername( e.target.value)} />
+        <Input onChange={(e)=>setuserInfor({...userInfor,username: e.target.value})} />
       </Form.Item>
       <Form.Item
         name="address"
@@ -113,7 +114,7 @@ const Register = () => {
           },
         ]}
       >
-        <Input onChange={(e)=>setAddress( e.target.value)}/>
+        <Input onChange={(e)=>setuserInfor({...userInfor,address: e.target.value})}/>
       </Form.Item>
       <Form.Item
         name="phonenumber"
@@ -122,14 +123,14 @@ const Register = () => {
         
           {
             required: true,
-            message: 'Please input your Name!',
+            message: 'Please input your PhoneNumber!',
           },
         ]}
       >
-        <Input onChange={(e)=>setPhonenumber( e.target.value)} />
+        <Input onChange={(e)=>setuserInfor({...userInfor,phonenumber: e.target.value})} />
       </Form.Item> 
       <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit" onChange={(e)=>handleSubmit(e)}>
+        <Button type="primary" htmlType="submit" onClick={(e)=>handleSubmit(e,userInfor)}>
              Register  
         </Button>
       </Form.Item>

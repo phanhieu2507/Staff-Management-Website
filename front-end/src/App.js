@@ -1,5 +1,5 @@
-import Login from './pages/Login.js';
-import Register from './pages/Register.js';
+import Login from './pages/Login/Login.js';
+import Register from './pages//Register/Register.js';
 import React from 'react';
 import { Route,Routes } from 'react-router-dom';
 import 'antd/dist/antd.css';
