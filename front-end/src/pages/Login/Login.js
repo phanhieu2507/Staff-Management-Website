@@ -4,21 +4,17 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { loginAPI } from "../../api/authenticate";
-import { useState } from "react";
 const Login = () => {
-  const navigate = useNavigate ();
+  const navigate = useNavigate();
   const onFinish = async (values) => {
     console.log("Received values of form: ", values);
 
     const response = await loginAPI(values);
     console.log(response);
     if (response.status === "success") {
-      <navigate to="/home" />;
-    } else <navigate to="/login" />;
+      navigate("\home");
+    } else navigate("\login");
   };
-
-
-  
 
   return (
     <Form
@@ -27,9 +23,9 @@ const Login = () => {
       initialValues={{
         remember: true,
       }}
-      onFinish={onFinish }
+      onFinish={onFinish}
       style={{ marginTop: "300px", width: 500, marginLeft: "600px" }}
-    >
+    ><h1>Login</h1>
       <Form.Item
         name="email"
         rules={[
@@ -40,13 +36,7 @@ const Login = () => {
         ]}
       >
         <Input
-          prefix={
-            <UserOutlined
-              className="site-form-item-icon"
-              
-            
-            />
-          }
+          prefix={<UserOutlined className="site-form-item-icon" />}
           placeholder="Email"
         />
       </Form.Item>
@@ -63,16 +53,10 @@ const Login = () => {
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
           placeholder="Password"
-          
         />
       </Form.Item>
       <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="login-form-button"
-         
-        >
+        <Button type="primary" htmlType="submit" className="login-form-button">
           Log in
         </Button>
         Or <a href="/register">register now!</a>

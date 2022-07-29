@@ -5,9 +5,16 @@ export const registerAPI = async (registerForm) => {
         return response.data;
     
     }
-    export const loginAPI = async (loginForm) => {
+export const loginAPI = async (loginForm) => {
     
         const response = await axios.post('/login', loginForm);
         return response.data;
     
     }
+    export const listAPI = async () => {
+    
+        const response = await axios.post('/home');
+        return response.data;
+    
+    }
+
