@@ -42,6 +42,39 @@ class UserController extends Controller
     }
     function list()
     {
-        return User::all();
+        $user=User::with('role')->get();
+        return response()->json($user, 200);
     }
+    function delete($id)
+    {
+        $result=User::where('id',$id)->delete();
+        if($result)
+        {
+            return ['result'=>'User has been deleted!'];
+
+        }
+        else return ['result'=>'Not found'];
+    }
+    function find($id)
+    {
+        $user= User::with('role')->find($id);
+        return response()->json($user, 200);
+    }
+    function update(Request $req,$id)
+{
+    $user = User::find($id);
+    $user->email=$req->input('email');
+    $user->password=$req->input('password');
+    $user->address=$req->input('address');
+    $user->username=$req->input('username');
+    $user->phonenumber=$req->input('phonenumber');
+    $user->role_id=2;
+    $user->save();
+    return $user;
+}
+ function search($key)
+ {
+    return User::with('role')->where('username','Like',"%$key%")->orWhere('email','Like',"%$key%")
+    ->orWhere('email','Like',"%$key%")->orWhere('address','Like',"%$key%")->get();
+ }
 }

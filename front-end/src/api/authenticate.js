@@ -11,10 +11,11 @@ export const loginAPI = async (loginForm) => {
         return response.data;
     
     }
-    export const listAPI = async () => {
+    export const updateAPI = async (updateForm,id) => {
     
-        const response = await axios.post('/home');
+        const response = await axios.put('/push/'+id, updateForm,id);
         return response.data;
     
     }
+  
 
