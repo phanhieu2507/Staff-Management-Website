@@ -119,9 +119,12 @@ const Register = () => {
         <Input />
       </Form.Item>
       <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
+      Already have an account? <a href="/login">Log In </a>now!
+      
+       <div> <br/><Button type="primary" htmlType="submit">
           Register
         </Button>
+        </div>
       </Form.Item>
     </Form>
   );

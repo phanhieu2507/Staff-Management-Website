@@ -73,6 +73,7 @@ const Home = () => {
     console.log(data);
   };
   const onDisplay = (value) => {
+    console.log(value);
     setDisplay(value);
   };
   useEffect(async () => {
@@ -207,6 +208,19 @@ const Home = () => {
             padding: "0 50px",
           }}
         >
+          <Select
+    showSearch
+    placeholder="Display"
+    optionFilterProp="children"
+    onChange={onDisplay}
+    filterOption={(input, option) =>
+      option.children.toLowerCase().includes(input.toLowerCase())
+    }
+  >
+    <Option value="10">10</Option>
+    <Option value="15">15</Option>
+    <Option value="25">25</Option>
+  </Select>
           <div style={{ paddingLeft: "1200px" }}>
             <Search
               placeholder="input search text"
@@ -218,7 +232,7 @@ const Home = () => {
           </div>
 
           <div>
-            <Table columns={columns} dataSource={input} size="middle" />
+            <Table columns={columns} dataSource={input} pagination={{pageSize: display}} size="middle" />
           </div>
         </Content>
         <Footer
