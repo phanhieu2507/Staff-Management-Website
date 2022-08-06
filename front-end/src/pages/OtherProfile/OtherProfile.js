@@ -1,8 +1,7 @@
 import { Button, Form, Input } from "antd";
-import React, { useState } from "react";
-import { registerAPI } from "../../api/authenticate";
-import { useNavigate } from "react-router-dom";
-
+import React, { useState,useEffect } from "react";
+import { useNavigate ,useParams} from "react-router-dom";
+import axios from "../../api/axios";
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -33,22 +32,30 @@ const tailFormItemLayout = {
     },
   },
 };
-const Add = () => {
+const OtherProfile = () => {
   const [form] = Form.useForm();
   const navigate=useNavigate();
-  const onFinish = async (values) => {
-   
-    await registerAPI(values);
-   alert('User Added')
-   
-      form.setFieldsValue({
-          username:"" ,
-           email: "",
-          phonenumber: "",
-           address:"",
-          password:"",
-       });
+  let {id}=useParams(); 
+  const onFinish = async () => {
+    console.log(id);
+  
+   navigate("/home");
   };
+  const [data, setData] = useState([]);
+  useEffect(async () => {
+    await axios.get("update/"+id).then((res) => {
+      setData(res.data);      
+    });
+  }, []);
+  console.log(data);
+  React.useEffect(() => {
+    form.setFieldsValue({
+        username:data.username ,
+         email: data.email,
+        phonenumber: data.phonenumber,
+         address:data.address,
+     });
+   }, [data]);
   return (
     <Form
       {...formItemLayout}
@@ -58,7 +65,7 @@ const Add = () => {
       scrollToFirstError
       style={{  paddingTop: "200px",marginRight: "600px",marginLeft: "300px"  }}
     >  
-    <h1 style={{ marginLeft: "220px"}}>Add</h1>
+    <h1 style={{ marginLeft: "220px"}}>Profile</h1>
       <Form.Item
         name="email"
         label="E-mail"
@@ -76,19 +83,6 @@ const Add = () => {
         <Input />
       </Form.Item>
       <Form.Item
-        name="password"
-        label="Password"
-        rules={[
-          {
-            required: true,
-            message: "Please input your password!",
-          },
-        ]}
-        hasFeedback
-      >
-        <Input.Password />
-      </Form.Item>
-      <Form.Item
         name="username"
         label="User Name"
         rules={[
@@ -98,7 +92,7 @@ const Add = () => {
           },
         ]}
       >
-        <Input />
+        <Input/>
       </Form.Item>
       <Form.Item
         name="address"
@@ -125,20 +119,12 @@ const Add = () => {
         <Input />
       </Form.Item>
       <Form.Item {...tailFormItemLayout}>
-        <Button style={{
-          padding: "0 55px",
-        }} type="primary" htmlType="submit">
-          Add staff
-        </Button>
-        <br/>
-       <div style={{ paddingTop:"20px" }} > <Button type="primary" style={{
-          padding: "0 50px",
-        }} onClick={()=>{navigate("/home")}}>
-          Back to list
-        </Button></div>
+      <a href={`/home`}> <Button type="primary" >
+          Back 
+        </Button></a>
       </Form.Item>
     </Form>
   );
 };
 
-export default Add;
+export default OtherProfile;

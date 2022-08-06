@@ -12,8 +12,10 @@ const Login = () => {
     const response = await loginAPI(values);
     console.log(response);
     if (response.status === "success") {
-      navigate("\home");
-    } else navigate("\login");
+     // response = response.json();
+      localStorage.setItem('userData',JSON.stringify(response));
+      navigate("/home");
+    } else navigate("/login");
   };
 
   return (

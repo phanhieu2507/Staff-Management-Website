@@ -139,9 +139,15 @@ const Update = () => {
         <Input />
       </Form.Item>
       <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" style={{
+          padding: "0 60px"}}>
           Update
         </Button>
+       <a href={`/home`}> <div style={{ paddingTop:"20px" }} > <Button type="primary" style={{
+          padding: "0 50px",
+        }} >
+          Back to list
+        </Button></div></a>
       </Form.Item>
     </Form>
   );
