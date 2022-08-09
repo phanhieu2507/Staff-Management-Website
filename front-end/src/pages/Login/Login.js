@@ -15,7 +15,7 @@ const Login = () => {
      // response = response.json();
       localStorage.setItem('userData',JSON.stringify(response));
       navigate("/home");
-    } else navigate("/login");
+    } else {navigate("/login"); alert('Try again')};
   };
 
   return (
