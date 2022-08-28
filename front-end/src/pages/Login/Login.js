@@ -1,5 +1,5 @@
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input } from "antd";
+import { LockOutlined, UserOutlined,SmileOutlined,CloseOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Form, Input ,notification} from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
@@ -7,15 +7,35 @@ import { loginAPI } from "../../api/authenticate";
 const Login = () => {
   const navigate = useNavigate();
   const onFinish = async (values) => {
-    console.log("Received values of form: ", values);
-
     const response = await loginAPI(values);
     console.log(response);
     if (response.status === "success") {
      // response = response.json();
       localStorage.setItem('userData',JSON.stringify(response));
+      notification.open({
+        message: 'Welcome '+response.user.username +'!',
+        icon: (
+          <SmileOutlined
+            style={{
+              color: '#108ee9',
+            }}
+          />
+        ),
+      });
       navigate("/home");
-    } else {navigate("/login"); alert('Try again')};
+    } else {
+      navigate("/login"); 
+      notification.open({
+        message: 'Try Again',
+        icon: (
+          <CloseOutlined
+            style={{
+              color: '#108ee9',
+            }}
+          />
+        ),
+      });
+    };
   };
 
   return (
@@ -27,7 +47,7 @@ const Login = () => {
       }}
       onFinish={onFinish}
       style={{ marginTop: "300px", width: 500, marginLeft: "600px" }}
-    ><h1>Login</h1>
+    ><h1>LOGIN</h1>
       <Form.Item
         name="email"
         rules={[
@@ -59,7 +79,7 @@ const Login = () => {
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">
-          Log in
+          LOGIN
         </Button>
         Or <a href="/register">register now!</a>
       </Form.Item>

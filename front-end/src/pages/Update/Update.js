@@ -1,9 +1,9 @@
-import { Button, Form, Input } from "antd";
-import React, { useState,useEffect } from "react";
-import { registerAPI } from "../../api/authenticate";
-import { useNavigate ,useParams} from "react-router-dom";
+import { Button, Form, Input,notification } from "antd";
+import React, { useState, useEffect } from "react";                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../api/axios";
 import { updateAPI } from "../../api/authenticate";
+import { CheckOutlined,ArrowLeftOutlined } from "@ant-design/icons";
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -36,43 +36,54 @@ const tailFormItemLayout = {
 };
 const Update = () => {
   const [form] = Form.useForm();
-  const navigate=useNavigate();
-  let {id}=useParams(); 
+  const navigate = useNavigate();
+  let { id } = useParams();
   const onFinish = async (values) => {
-    console.log(id);
-    await updateAPI(values,id);
-  
-   navigate("/home");
+    notification.open({
+      message: 'Updated',
+      icon: (
+        <CheckOutlined
+          style={{
+            color: '#108ee9',
+          }}
+        />
+      ),
+    });
+    await updateAPI(values, id);
+    navigate("/home");
+    window.location.reload()
   };
   const [data, setData] = useState([]);
   useEffect(async () => {
-    await axios.get("update/"+id).then((res) => {
+    await axios.get("update/" + id).then((res) => {
       setData(res.data);
-      console.log(1);
-      
     });
-    console.log(2);
   }, []);
-  console.log(data);
   React.useEffect(() => {
     form.setFieldsValue({
-        username:data.username ,
-         email: data.email,
-        phonenumber: data.phonenumber,
-         address:data.address,
-         password:data.password
-     });
-   }, [data]);
+      username: data.username,
+      email: data.email,
+      phonenumber: data.phonenumber,
+      address: data.address,
+      password: data.password,
+    });
+  }, [data]);
   return (
+    <>
+         <ArrowLeftOutlined className="back-button" style={{ fontSize: '30px',width:'50px'}} onClick={() => {
+      navigate(`/home`)
+      window.location.reload()
+    }
+      } />
     <Form
       {...formItemLayout}
       form={form}
       name="register"
       onFinish={onFinish}
       scrollToFirstError
-      style={{  paddingTop: "200px",marginRight: "600px",marginLeft: "300px"  }}
-    >  
-    <h1 style={{ marginLeft: "220px"}}>Update</h1>
+      style={{ paddingTop: "200px", marginRight: "600px", marginLeft: "500px" }}
+    >
+      <h1 style={{ marginLeft: "230px" }}>UPDATE</h1>
       <Form.Item
         name="email"
         label="E-mail"
@@ -112,7 +123,7 @@ const Update = () => {
           },
         ]}
       >
-        <Input/>
+        <Input />
       </Form.Item>
       <Form.Item
         name="address"
@@ -139,17 +150,19 @@ const Update = () => {
         <Input />
       </Form.Item>
       <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit" style={{
-          padding: "0 60px"}}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          style={{
+            padding: "0 60px",
+            width:"290px"
+          }}
+        >
           Update
         </Button>
-       <a href={`/home`}> <div style={{ paddingTop:"20px" }} > <Button type="primary" style={{
-          padding: "0 50px",
-        }} >
-          Back to list
-        </Button></div></a>
       </Form.Item>
     </Form>
+    </>
   );
 };
 

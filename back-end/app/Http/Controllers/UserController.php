@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     function register_user(Request $req)
@@ -12,7 +13,7 @@ class UserController extends Controller
          
           $user = new User;
           $user->email=$req->input('email');
-          $user->password=$req->input('password');
+          $user->password=Hash::make($req->input('password'));
           $user->address=$req->input('address');
           $user->username=$req->input('username');
           $user->phonenumber=$req->input('phonenumber');
@@ -23,7 +24,7 @@ class UserController extends Controller
     function login(Request $req)
     {
         $user= User::with('role')->where('email',$req->email)->first();
-         if(!$user||$req->password!=$user->password)
+         if(!$user||!Hash::check($req->password,$user->password))
          {
              return response()->json([
                  "status" =>"fail",
@@ -64,7 +65,7 @@ class UserController extends Controller
 {
     $user = User::find($id);
     $user->email=$req->input('email');
-    $user->password=$req->input('password');
+    $user->password=Hash::make($req->input('password'));
     $user->address=$req->input('address');
     $user->username=$req->input('username');
     $user->phonenumber=$req->input('phonenumber');

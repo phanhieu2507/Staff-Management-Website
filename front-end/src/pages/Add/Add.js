@@ -1,8 +1,8 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input,notification } from "antd";
 import React, { useState } from "react";
 import { registerAPI } from "../../api/authenticate";
 import { useNavigate } from "react-router-dom";
-
+import {ArrowLeftOutlined,CheckOutlined} from '@ant-design/icons'
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -35,30 +35,44 @@ const tailFormItemLayout = {
 };
 const Add = () => {
   const [form] = Form.useForm();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const onFinish = async (values) => {
-   
     await registerAPI(values);
-   alert('User Added')
-   
-      form.setFieldsValue({
-          username:"" ,
-           email: "",
-          phonenumber: "",
-           address:"",
-          password:"",
-       });
+    notification.open({
+      message: 'Staff Added',
+      icon: (
+        <CheckOutlined
+          style={{
+            color: '#108ee9',
+          }}
+        />
+      ),
+    });
+
+    form.setFieldsValue({
+      username: "",
+      email: "",
+      phonenumber: "",
+      address: "",
+      password: "",
+    });
   };
   return (
+    <>
+     <ArrowLeftOutlined className="back-button" style={{ fontSize: '30px',width:'50px'}} onClick={() => {
+      navigate(`/home`)
+      window.location.reload()
+    }
+      } />
     <Form
       {...formItemLayout}
       form={form}
       name="register"
       onFinish={onFinish}
       scrollToFirstError
-      style={{  paddingTop: "200px",marginRight: "600px",marginLeft: "300px"  }}
-    >  
-    <h1 style={{ marginLeft: "220px"}}>Add</h1>
+      style={{ paddingTop: "100px", marginRight: "500px", marginLeft: "400px" }}
+    >
+      <h1 style={{ marginLeft: "220px" }}>ADD STAFF</h1>
       <Form.Item
         name="email"
         label="E-mail"
@@ -125,19 +139,18 @@ const Add = () => {
         <Input />
       </Form.Item>
       <Form.Item {...tailFormItemLayout}>
-        <Button style={{
-          padding: "0 55px",
-        }} type="primary" htmlType="submit">
-          Add staff
+        <Button
+          style={{
+            padding: "0 55px",
+          }}
+          type="primary"
+          htmlType="submit"
+        >
+          Add Staff
         </Button>
-        <br/>
-       <div style={{ paddingTop:"20px" }} > <Button type="primary" style={{
-          padding: "0 50px",
-        }} onClick={()=>{navigate("/home")}}>
-          Back to list
-        </Button></div>
       </Form.Item>
     </Form>
+    </>
   );
 };
 

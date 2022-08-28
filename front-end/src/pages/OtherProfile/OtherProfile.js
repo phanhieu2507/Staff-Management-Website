@@ -2,6 +2,7 @@ import { Button, Form, Input } from "antd";
 import React, { useState,useEffect } from "react";
 import { useNavigate ,useParams} from "react-router-dom";
 import axios from "../../api/axios";
+import {ArrowLeftOutlined} from '@ant-design/icons'
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -38,7 +39,6 @@ const OtherProfile = () => {
   let {id}=useParams(); 
   const onFinish = async () => {
     console.log(id);
-  
    navigate("/home");
   };
   const [data, setData] = useState([]);
@@ -57,15 +57,22 @@ const OtherProfile = () => {
      });
    }, [data]);
   return (
+    <>
+    <ArrowLeftOutlined className="back-button" style={{ fontSize: '30px',width:'50px'}} onClick={() => {
+      navigate(`/home`)
+      window.location.reload()
+    }
+      } />
     <Form
       {...formItemLayout}
       form={form}
       name="register"
       onFinish={onFinish}
       scrollToFirstError
-      style={{  paddingTop: "200px",marginRight: "600px",marginLeft: "300px"  }}
+      style={{  paddingTop: "100px",marginRight: "600px",marginLeft: "400px"  }}
+      disabled={true}
     >  
-    <h1 style={{ marginLeft: "220px"}}>Profile</h1>
+    <h1 style={{ marginLeft: "185px"}}>USER PROFILE</h1>
       <Form.Item
         name="email"
         label="E-mail"
@@ -118,12 +125,9 @@ const OtherProfile = () => {
       >
         <Input />
       </Form.Item>
-      <Form.Item {...tailFormItemLayout}>
-      <a href={`/home`}> <Button type="primary" >
-          Back 
-        </Button></a>
-      </Form.Item>
+     
     </Form>
+    </>
   );
 };
 

@@ -13,10 +13,8 @@ import OtherProfile from './pages/OtherProfile/OtherProfile.js';
 import NotFound from './pages/404/NotFound.js';
 const App = () =>
 {
-
   return (
     <div>  
-   
       <Routes>
       <Route path="*" element={<NotFound />} />
         <Route path='/' element={<Login />} />
@@ -33,7 +31,6 @@ const App = () =>
           </Route>
         </Route>
       </Routes>
-    
     </div>
   );
 

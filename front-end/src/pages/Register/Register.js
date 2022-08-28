@@ -1,4 +1,5 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input,notification } from "antd";
+import { CheckOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import { registerAPI } from "../../api/authenticate";
 import { useNavigate } from "react-router-dom";
@@ -37,11 +38,19 @@ const Register = () => {
   const [form] = Form.useForm();
   const navigate=useNavigate();
   const onFinish = async (values) => {
-   
+    notification.open({
+      message: 'Register Successfully',
+      icon: (
+        <CheckOutlined
+          style={{
+            color: '#108ee9',
+          }}
+        />
+      ),
+    });
     await registerAPI(values);
-   
     console.log("Received values of form: ", values);
-   navigate("/login");
+    navigate("/login");
   };
   return (
     <Form
