@@ -15,7 +15,7 @@ describe("staff", () => {
   it("visit login page", () => {
     cy.visit("/login");
   });
-  it("check login as admin", () => {
+  it("check login as staff", () => {
     cy.get("#normal_login_email").type("hieu@gmail.com")
     cy.get("#normal_login_password").type("123456")
     cy.get("button").click()
