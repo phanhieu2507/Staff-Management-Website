@@ -1,0 +1,14 @@
+.register-body {
+    position: absolute;
+    display: flex;
+    top: 20%;
+    left: 0;
+    right: 0;
+    max-width: 400px;
+   
+    margin: auto;
+    border: 2px solid grey;
+    border-radius: 10px;
+    z-index: 10;
+    
+ }

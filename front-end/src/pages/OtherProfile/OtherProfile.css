@@ -1,0 +1,36 @@
+.back-button {
+    position: absolute;
+    display: flex;
+    top: 0px ;
+    font-size: 30px;
+    width: 50px;
+    z-index: 10;
+    
+ }
+ .other-profile {
+    position: absolute;
+    display: flex;
+    top: 10%;
+    left: 15%;
+    right: 30px;
+    max-width: 600px;
+    margin: auto;
+    /* border: 2px solid grey; */
+    border-radius: 10px;
+    z-index: 10;
+    
+ }
+.avatar {
+   position: absolute;
+   display: flex;
+   top: 9% ;
+   left: 20%;
+   z-index: 10;
+}
+.evaluate-btn {
+   position: absolute;
+   display: flex;
+   top: 35% ;
+   left: 80%;
+   z-index: 10;
+}
