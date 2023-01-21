@@ -1,0 +1,9 @@
+.tab {
+    position: absolute;
+    width: 100vh;
+    top: 32% ;
+    left: 30%;
+    z-index: 0;
+   
+
+}
