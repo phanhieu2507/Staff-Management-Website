@@ -1,10 +1,18 @@
 import React from "react";
+import 'antd/dist/antd.css';
+import BackGround from "../../components/BackGround";
+import { Button,Result } from 'antd';
+import "./NotFound.css"
 const NotFound = () => (
-  <div className="not-found">
-    <img
-      src="https://www.pngitem.com/pimgs/m/561-5616833_image-not-found-png-not-found-404-png.png"
-      alt="not-found"
-    />
-  </div>
+  <>
+  <BackGround/>
+  <Result
+    className="error" 
+    status="404"
+    title="404"
+    subTitle="Sorry, the page you visited does not exist."
+    extra={<a href="/home"> <Button type="primary">Back Home</Button></a>}
+  />
+  </>
 );
 export default NotFound;

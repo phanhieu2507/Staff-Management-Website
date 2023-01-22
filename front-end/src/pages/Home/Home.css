@@ -36,3 +36,13 @@
         [data-theme="dark"] .site-layout-content {
           background: #141414;
         }
+.row-property {
+  position: absolute;
+  top: 10%;
+  left: 10px;
+  right: 10px;
+  margin: auto;
+}
+.header {
+  background: #fff;
+}

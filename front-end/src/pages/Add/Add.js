@@ -1,8 +1,10 @@
-import { Button, Form, Input,notification } from "antd";
+import { Button, Form, Input, notification, Modal } from "antd";
 import React, { useState } from "react";
 import { registerAPI } from "../../api/authenticate";
 import { useNavigate } from "react-router-dom";
-import {ArrowLeftOutlined,CheckOutlined} from '@ant-design/icons'
+import { ArrowLeftOutlined, CheckOutlined,ExclamationCircleOutlined } from "@ant-design/icons";
+import BackGround from "../../components/BackGround";
+import "./Add.css";
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -35,121 +37,141 @@ const tailFormItemLayout = {
 };
 const Add = () => {
   const [form] = Form.useForm();
+  const [fieldsChange, setFieldsChange] = useState(false);
   const navigate = useNavigate();
+  const { confirm } = Modal;
   const onFinish = async (values) => {
     await registerAPI(values);
     notification.open({
-      message: 'Staff Added',
+      message: "User has been added to your company",
       icon: (
         <CheckOutlined
           style={{
-            color: '#108ee9',
+            color: "#108ee9",
           }}
         />
       ),
     });
+    form.resetFields();
+  };
+  const showConfirm = () => {
+    confirm({
+      title: 'Leave site?',
+      icon: <ExclamationCircleOutlined />,
+      content: 'Your changes have not been saved.',
+  
+      onOk() {
+        navigate(`/home`);
+        window.location.reload();
 
-    form.setFieldsValue({
-      username: "",
-      email: "",
-      phonenumber: "",
-      address: "",
-      password: "",
+      },
+      onCancel() {
+      },
     });
   };
   return (
     <>
-     <ArrowLeftOutlined className="back-button" style={{ fontSize: '30px',width:'50px'}} onClick={() => {
-      navigate(`/home`)
-      window.location.reload()
-    }
-      } />
-    <Form
-      {...formItemLayout}
-      form={form}
-      name="register"
-      onFinish={onFinish}
-      scrollToFirstError
-      style={{ paddingTop: "100px", marginRight: "500px", marginLeft: "400px" }}
-    >
-      <h1 style={{ marginLeft: "220px" }}>ADD STAFF</h1>
-      <Form.Item
-        name="email"
-        label="E-mail"
-        rules={[
-          {
-            type: "email",
-            message: "The input is not valid E-mail!",
-          },
-          {
-            required: true,
-            message: "Please input your E-mail!",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        label="Password"
-        rules={[
-          {
-            required: true,
-            message: "Please input your password!",
-          },
-        ]}
-        hasFeedback
-      >
-        <Input.Password />
-      </Form.Item>
-      <Form.Item
-        name="username"
-        label="User Name"
-        rules={[
-          {
-            required: true,
-            message: "Please input your Name!",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="address"
-        label="Address"
-        rules={[
-          {
-            required: true,
-            message: "Please input your Address!",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="phonenumber"
-        label="Phone Number"
-        rules={[
-          {
-            required: true,
-            message: "Please input your PhoneNumber!",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item {...tailFormItemLayout}>
-        <Button
-          style={{
-            padding: "0 55px",
-          }}
-          type="primary"
-          htmlType="submit"
-        >
-          Add Staff
-        </Button>
-      </Form.Item>
-    </Form>
+      <ArrowLeftOutlined
+        className="back-button"
+        style={{ fontSize: "30px", width: "50px" }}
+        onClick={() => {
+          if(fieldsChange) {
+            showConfirm()
+          }
+          else{
+          navigate(`/home`);
+          window.location.reload();
+          }
+        }}
+      />
+      <div>
+        <BackGround />
+        <div className="add-body">
+          <Form
+            {...formItemLayout}
+            form={form}
+            name="register"
+            onFinish={onFinish}
+            onFieldsChange={() => {setFieldsChange(true)}}
+            scrollToFirstError
+            style={{ minWidth: "400px" }}
+          >
+            <h1 style={{ marginLeft: "32px" }}>Add Staff</h1>
+            <hr style={{ margin: "10px 35px 20px 35px" }} />
+            <div style={{ marginLeft: "50px", marginRight: "-95px" }}>
+              <Form.Item
+                name="email"
+                rules={[
+                  {
+                    type: "email",
+                    message: "The input is not valid E-mail!",
+                  },
+                  {
+                    required: true,
+                    message: "Please input your E-mail!",
+                  },
+                ]}
+              >
+                <Input placeholder="Email" />
+              </Form.Item>
+              <Form.Item
+                name="password"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your password!",
+                  },
+                ]}
+                hasFeedback
+              >
+                <Input.Password placeholder="Password" />
+              </Form.Item>
+              <Form.Item
+                name="username"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your Name!",
+                  },
+                ]}
+              >
+                <Input placeholder="User Name" />
+              </Form.Item>
+              <Form.Item
+                name="address"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your Address!",
+                  },
+                ]}
+              >
+                <Input placeholder="Address" />
+              </Form.Item>
+              <Form.Item
+                name="phonenumber"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your PhoneNumber!",
+                  },
+                ]}
+              >
+                <Input placeholder="Phonenumber" />
+              </Form.Item>
+            </div>
+            <Form.Item {...tailFormItemLayout}>
+              <div style={{ paddingLeft: "20px" }}>
+                {" "}
+                <br />
+                <Button type="primary" htmlType="submit">
+                  Add Staff
+                </Button>
+              </div>
+            </Form.Item>
+          </Form>
+        </div>
+      </div>
     </>
   );
 };

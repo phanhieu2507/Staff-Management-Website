@@ -1,6 +1,20 @@
-.login-form {
+.form-body {
+    position: absolute;
+    display: flex;
+    top: 35%;
+    left: 0;
+    right: 0;
     max-width: 300px;
+    margin: auto;
+    border: 2px solid grey;
+    border-radius: 10px;
+    z-index: 10;
+    
+ }
+.login-form { 
+    min-width: 295px;
     align: center;
+
   }
   .login-form-forgot {
     float: right;

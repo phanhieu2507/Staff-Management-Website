@@ -1,0 +1,22 @@
+.back-button {
+    position: absolute;
+    display: flex;
+    top: 0px ;
+    font-size: 30px;
+    width: 50px;
+    z-index: 10;
+    
+ }
+ .add-body {
+    position: absolute;
+    display: flex;
+    top: 24%;
+    left: 0;
+    right: 0;
+   max-width: 400px;
+    margin: auto;
+    border: 2px solid grey;
+    border-radius: 10px;
+    z-index: 10;
+    
+ }

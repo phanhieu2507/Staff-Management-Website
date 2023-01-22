@@ -11,11 +11,15 @@ export const loginAPI = async (loginForm) => {
         return response.data;
     
     }
-    export const updateAPI = async (updateForm,id) => {
-    
-        const response = await axios.put('/push/'+id, updateForm,id);
-        return response.data;
-    
-    }
-  
+export const updateAPI = async (updateForm,id) => {
 
+    const response = await axios.put('/push/'+id, updateForm,id);
+    return response.data;
+
+}
+export  const updateperformanceAPI = async (updateForm,id) => {
+
+    const response = await axios.put('/updateperformance/'+id, updateForm,id);
+    console.log(updateForm)
+
+}

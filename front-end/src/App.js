@@ -11,10 +11,13 @@ import IsLogin from './components/IsLogin.js';
 import IsAdmin from './components/IsAdmin.js';
 import OtherProfile from './pages/OtherProfile/OtherProfile.js';
 import NotFound from './pages/404/NotFound.js';
+import BackGround from './components/BackGround.js';
+import Task from './pages/Task/index.js';
 const App = () =>
 {
   return (
-    <div>  
+    <div>
+       
       <Routes>
       <Route path="*" element={<NotFound />} />
         <Route path='/' element={<Login />} />
@@ -24,6 +27,7 @@ const App = () =>
            <Route path='/home' element={<Home />} />
            <Route path='/profile' element={<Profile />} />
            <Route path='/otherprofile/:id' element={<OtherProfile />} />
+           <Route path='/otherprofile/:id/tasks' element={<Task />} />
            <Route element={<IsAdmin />}>
              <Route path='/add' element={<Add />} />
              <Route path='/update/:id' element={<Update />} />
@@ -31,6 +35,7 @@ const App = () =>
           </Route>
         </Route>
       </Routes>
+
     </div>
   );
 

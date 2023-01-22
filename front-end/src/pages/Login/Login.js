@@ -4,7 +4,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { loginAPI } from "../../api/authenticate";
+import BackGround from "../../components/BackGround";
 const Login = () => {
+
   const navigate = useNavigate();
   const onFinish = async (values) => {
     const response = await loginAPI(values);
@@ -26,7 +28,7 @@ const Login = () => {
     } else {
       navigate("/login"); 
       notification.open({
-        message: 'Try Again',
+        message: 'The Email or Password is Incorrect',
         icon: (
           <CloseOutlined
             style={{
@@ -39,6 +41,9 @@ const Login = () => {
   };
 
   return (
+    <div >
+    <BackGround/>
+    <div  className="form-body">
     <Form
       name="normal_login"
       className="login-form"
@@ -46,8 +51,8 @@ const Login = () => {
         remember: true,
       }}
       onFinish={onFinish}
-      style={{ marginTop: "300px", width: 500, marginLeft: "600px" }}
-    ><h1>LOGIN</h1>
+      style= {{ padding: "20px 20px" }}
+    >
       <Form.Item
         name="email"
         rules={[
@@ -56,6 +61,7 @@ const Login = () => {
             message: "Please input your Email!",
           },
         ]}
+
       >
         <Input
           prefix={<UserOutlined className="site-form-item-icon" />}
@@ -84,6 +90,9 @@ const Login = () => {
         Or <a href="/register">register now!</a>
       </Form.Item>
     </Form>
+    </div>
+    
+    </div>
   );
 };
 
