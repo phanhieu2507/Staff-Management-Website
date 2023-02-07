@@ -27,7 +27,7 @@ class TaskController extends Controller
             $noti = new Notification;
             $noti -> user_id = $task -> user_id;
             $noti -> task_id = $task->id;
-            $noti -> description = $req->admin ." "."assigned you to task:". $req->title;
+            $noti -> description = $req->admin ." "."assigned you to task:"." ". $req->title;
             $noti -> read = '0';
             $noti ->save();
            

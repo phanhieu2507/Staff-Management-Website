@@ -12,8 +12,8 @@ import "./style.css";
 const Chart = (props) => {
   return (
     <>
-    <div className="chart">
-      <LineChart  width={730} height={250} data={props?.data}>
+    <div>
+      <LineChart  width={430} height={170} data={props?.data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="month">
           {/* <Label className= 'label' value= 'Month' position= 'Bottom' fill='rgb(136, 132, 216)'  fontSize= '25'  fontStyle= 'italic' />  */}

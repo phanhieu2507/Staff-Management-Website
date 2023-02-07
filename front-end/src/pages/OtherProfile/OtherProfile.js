@@ -1,11 +1,17 @@
-import { Descriptions, Modal, Button, Table, Rate, Avatar, Tabs } from "antd";
+import {
+  Descriptions,
+  Modal,
+  Button,
+  Table,
+  Rate,
+  Avatar,
+  InputNumber,
+} from "antd";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../../api/axios";
 import {
-  ArrowLeftOutlined,
   StarTwoTone,
-  UserOutlined,
 } from "@ant-design/icons";
 import "./OtherProfile.css";
 import BackGround from "../../components/BackGround";
@@ -20,6 +26,7 @@ const OtherProfile = () => {
   const [perform, setPerform] = useState([]);
   const [starCount, setstarCount] = useState({});
   const [toggle, setToggle] = useState(true);
+  const [bonus, setBonus] = useState(100000);
   const columns = [
     {
       title: "Month",
@@ -196,6 +203,91 @@ const OtherProfile = () => {
       ),
     },
   ];
+  const dataSourceBegin = [
+    {
+      month: "1",
+      bonus: starCount.month_1 * bonus,
+    },
+    {
+      month: "2",
+      bonus: starCount.month_2 * bonus,
+    },
+    {
+      month: "3",
+      bonus: starCount.month_3 * bonus,
+    },
+    {
+      month: "4",
+      bonus: starCount.month_4 * bonus,
+    },
+    {
+      month: "5",
+      bonus: starCount.month_5 * bonus,
+    },
+    {
+      month: "6",
+      bonus: starCount.month_6 * bonus,
+    },
+  ];
+  const dataSourceEnd = [
+    {
+      month: "7",
+      bonus: starCount.month_7 * bonus,
+    },
+    {
+      month: "8",
+      bonus: starCount.month_8 * bonus,
+    },
+    {
+      month: "9",
+      bonus: starCount.month_9 * bonus,
+    },
+    {
+      month: "10",
+      bonus: starCount.month_10 * bonus,
+    },
+    {
+      month: "11",
+      bonus: starCount.month_11 * bonus,
+    },
+    {
+      month: "12",
+      bonus: starCount.month_12 * bonus,
+    },
+    {
+      month: <b>Total</b>,
+      bonus: (
+        (starCount.month_1 +
+          starCount.month_2 +
+          starCount.month_3 +
+          starCount.month_4 +
+          starCount.month_5 +
+          starCount.month_6 +
+          starCount.month_7 +
+          starCount.month_8 +
+          starCount.month_9 +
+          starCount.month_10 +
+          starCount.month_11 +
+          starCount.month_12) *
+        bonus
+      ).toLocaleString("en-US", {
+        style: "currency",
+        currency: "VND",
+      }),
+    },
+  ];
+
+  const dataColumns = [
+    {
+      title: "Month",
+      dataIndex: "month",
+    },
+    {
+      title: "Bonus (VND)",
+      dataIndex: "bonus",
+    },
+  ];
+
   useEffect(() => {
     const getData = async () => {
       await axios.get("update/" + id).then((res) => {
@@ -266,21 +358,23 @@ const OtherProfile = () => {
           <div className="  mt-44 ">
             <Header user_id={id} />
           </div>
-          <div className={"flex justify-end mr-96 "}
-          style={{
-            display:
-              JSON.parse(localStorage.getItem("userData")).user.role
-                .role_name === "ADMIN"
-                ? ""
-                : "none",
-          }} >
+          <div
+            className={"flex justify-end mr-96 "}
+            style={{
+              display:
+                JSON.parse(localStorage.getItem("userData")).user.role
+                  .role_name === "ADMIN"
+                  ? ""
+                  : "none",
+            }}
+          >
             <Button type="text" onClick={showModal}>
               Evaluate
               <StarTwoTone />
             </Button>
           </div>
           <Modal
-            title="Basic Modal"
+            title={data.username}
             visible={isModalOpen}
             onOk={handleOk}
             onCancel={handleCancel}
@@ -294,8 +388,39 @@ const OtherProfile = () => {
           </Modal>
         </div>
       </div>
-
-      <Chart data={perform} />
+      <div className="absolute top-96 left-96 ">
+        <div className="flex flex-col gap-10">
+      <InputNumber className ="w-36 rounded-md" 
+      addonBefore="Base Salary" 
+      addonAfter="₫" 
+      defaultValue={bonus}
+      onPressEnter = {(e) => {
+        setBonus(e.target.value)
+      }} />
+        <div className="flex flex-row gap-20 ">
+          <div>
+            <Table
+              columns={dataColumns}
+              dataSource={dataSourceBegin}
+              size="large"
+              style={{ border: "2px solid rgb(240, 240, 240)" }}
+            />
+          </div>
+          <div>
+            <Table
+              columns={dataColumns}
+              dataSource={dataSourceEnd}
+              size="large"
+              style={{ border: "2px solid rgb(240, 240, 240)" }}
+            />
+          </div>
+          <div>
+            {" "}
+            <Chart data={perform} />
+          </div>
+        </div>
+        </div>
+      </div>
     </>
   );
 };
